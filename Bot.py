@@ -24,7 +24,7 @@ async def on_message(message):
     if message.content.startswith("!롤"):
         learn = message.content.split(" ")
         location = learn[1]
-        if len(learn) > 3:
+        if len(learn) > 2:
             loc = ""
             for l in range(1, len(learn), 1):
                 loc += learn[l]
