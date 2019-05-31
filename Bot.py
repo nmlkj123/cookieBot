@@ -1,7 +1,7 @@
 import discord
 import os
 import urllib.request
-
+import datetime
 import bs4
 
 
@@ -17,6 +17,55 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+        if message.content.startswith('!실검') :
+        url = "https://www.naver.com/"
+        html = urllib.request.urlopen(url)
+
+        bsObj = bs4.BeautifulSoup(html, "html.parser")
+        realTimeSerach1 = bsObj.find('div', {'class': 'ah_roll_area PM_CL_realtimeKeyword_rolling'})
+        realTimeSerach2 = realTimeSerach1.find('ul', {'class': 'ah_l'})
+        realTimeSerach3 = realTimeSerach2.find_all('li')
+
+        embed = discord.Embed(
+            title='네이버 실시간 검색순위',
+            description='1위~20위',
+            colour=discord.Colour.green()
+        )
+        for i in range(0, 20):
+            realTimeSerach4 = realTimeSerach3[i]
+            realTimeSerach5 = realTimeSerach4.find('span', {'class': 'ah_k'})
+            realTimeSerach = realTimeSerach5.text.replace(' ', '')
+            realURL = 'https://search.naver.com/search.naver?ie=utf8&query=' + realTimeSerach
+            print(realTimeSerach)
+            embed.add_field(name=str(i + 1) + '위', value='\n' + '[%s](<%s>)' % (realTimeSerach, realURL),
+                            inline=False)  # [텍스트](<링크>) 형식으로 적으면 텍스트 하이퍼링크 만들어집니다
+
+        await message.channel.send( embed=embed)
+
+    if message.content.startswith("!명령어"):
+        embed = discord.Embed(
+            title='(✪㉨✪) (⌬̀⌄⌬́) （๑✧∀✧๑）٩(●ᴗ●)۶',
+            description='-쿠키봇의 명령어\n\n ',
+            colour=discord.Colour.blue()
+        )
+        dtime = datetime.datetime.now()
+        embed.add_field(name='!롤 아이디', value='롤op.gg 전적검색 결과를 보여줍니다 참고- 언랭은 정보따위 제공안합니다.', inline=True)
+        embed.add_field(name='!핑', value='지연시간확인. ', inline=False)
+        embed.add_field(name='!투표 제목/내용/내용...', value='투표함을 만듭니다. 이모지를 클릭하여 투표를 진행합니다.', inline=False)
+        embed.add_field(name='!실검', value='네이버 실시간 검색순위를 1위부터 20위까지 보여줍니다.', inline=False)
+        embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
+            dtime.hour) + "시 " + str(dtime.minute) + "분")
+        await message.channel.send(embed=embed)
+
+    if message.content.startswith("!투표"):
+
+        vote = message.content[4:].split("/")
+
+        await message.channel.send("✉투표 - "+vote[0])
+        for i in range(1,len(vote)):
+            choose= await  message.channel.send("```"+vote[i]+"```")
+            await choose.add_reaction('👍')
+            
     if message.content.startswith("!핑"):
         ping = '%.2f' % (1000 * (client.latency))
         await  message.channel.send(ping+"ms")
