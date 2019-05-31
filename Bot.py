@@ -1,7 +1,6 @@
 import discord
 import os
 import urllib.request
-import datetime
 import bs4
 
 
@@ -51,13 +50,12 @@ async def on_message(message):
             description='-쿠키봇의 명령어\n\n ',
             colour=discord.Colour.blue()
         )
-        dtime = datetime.datetime.now()
+
         embed.add_field(name='!롤 아이디', value='롤op.gg 전적검색 결과를 보여줍니다 참고- 언랭은 정보따위 제공안합니다.', inline=True)
         embed.add_field(name='!핑', value='지연시간확인. ', inline=False)
         embed.add_field(name='!투표 제목/내용/내용...', value='투표함을 만듭니다. 이모지를 클릭하여 투표를 진행합니다.', inline=False)
         embed.add_field(name='!실검', value='네이버 실시간 검색순위를 1위부터 10위까지 보여줍니다.', inline=False)
-        embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
-            dtime.hour) + "시 " + str(dtime.minute) + "분")
+
         await message.channel.send(embed=embed)
 
     if message.content.startswith("!투표"):
