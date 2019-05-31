@@ -71,15 +71,14 @@ async def on_message(message):
         await  message.channel.send(ping+"ms")
 
     if message.content.startswith("!롤"):
-        learn = message.content.split(" ")
-        location = learn[1]
-        if len(learn) > 2:
+        learn = message.content[3:].split(" ")
+        print(learn[0])
+        location = learn[0]
+        if len(learn) > 1:
             loc = ""
-            for l in range(1, len(learn), 1):
+            for l in range(0, len(learn), 1):
                 loc += learn[l]
-            location = loc
-
-        print(learn[1])
+            location=loc
         enc_location = urllib.parse.quote(location)
         print(enc_location)
         url = "http://www.op.gg/summoner/userName=" + enc_location
