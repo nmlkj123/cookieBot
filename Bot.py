@@ -25,12 +25,16 @@ async def on_message(message):
     if message.content.startswith('!롤각'):
         randomNum = random.randrange(1, 3)
         if randomNum == 1:
+            lolm=['강해지고싶나? 그럼 롤을 키시게!! (￣ω￣)','롤각 가즈아~ (* >ω<) (＞Д＜)ゝ','★오늘의메타 : 탑소라카 GOGO -얼른키라구!'
+                  ,'오늘은 승급하는날 입니다（＾∀＾）']
             await message.channel.send(
-                embed=discord.Embed(description="롤각 가즈아~ (* >ω<) (＞Д＜)ゝ", colour=discord.Colour.green()))
+                embed=discord.Embed(description=random.choice(lolm), colour=discord.Colour.green()))
             return
         else:
+            lolm = ['응 오늘은아니야~ (ಥ﹏ಥ)', '오늘하면 9대1을 하게 될 것입니다 물론 당신이 1 (;Д;)(Ｔ▽Ｔ)', '우리팀 정글이 던지는날입니다...마음의 준비를하세요 ☜╮(´ิ∀´ิ☜╮)'
+                , '오늘은 10연패각 입니다ㄷㄷ (;´Д｀)']
             await message.channel.send(
-                embed=discord.Embed(description="응 오늘은아니야~ ಥ_ಥ (╥_╥)", colour=discord.Colour.green()))
+                embed=discord.Embed(description=random.choice(lolm), colour=discord.Colour.red()))
             return
 
     if message.content.startswith('!실검') :
@@ -69,6 +73,7 @@ async def on_message(message):
         embed.add_field(name='!핑', value='지연시간확인. ', inline=False)
         embed.add_field(name='!투표 제목/내용/내용...', value='투표함을 만듭니다. 이모지를 클릭하여 투표를 진행합니다.', inline=False)
         embed.add_field(name='!실검', value='네이버 실시간 검색순위를 1위부터 20위까지 보여줍니다.', inline=False)
+        embed.add_field(name='!롤각', value='오늘 롤의 운세를 정해줍니다 찡긋^.', inline=False)
         embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
         await message.channel.send(embed=embed)
