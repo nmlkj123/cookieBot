@@ -84,7 +84,7 @@ async def on_message(message):
 
     if message.content.startswith("!핑"):
         ping = '%.2f' % (1000 * (client.latency ))
-        await  message.channel.send(ping )
+        await  message.channel.send(ping+"ms")
 
     if message.content.startswith("!롤"):
         learn = message.content[3:].split(" ")
