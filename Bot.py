@@ -76,9 +76,12 @@ async def on_message(message):
         dtime = datetime.datetime.now()
         embed.add_field(name='!롤 아이디', value='롤op.gg 전적검색 결과를 보여줍니다 참고- 언랭은 정보따위 제공안합니다.', inline=True)
         embed.add_field(name='!롤각', value='오늘 롤의 운세를 정해줍니다 찡긋^.', inline=False)
+        embed.add_field(name='!play 유튜브 링크', value='뮤직앱에 노래를 추가합니다.', inline=False)
+        embed.add_field(name='!queue', value='뮤직앱의 플레이 리스트를 봅니다.', inline=False)
+        embed.add_field(name='!skip', value='현재곡 스킵 투표를 합니다.', inline=False)
         embed.add_field(name='!핑', value='지연시간확인. ', inline=False)
         embed.add_field(name='!투표 제목/내용/내용...', value='투표함을 만듭니다. 이모지를 클릭하여 투표를 진행합니다.', inline=False)
-        embed.add_field(name='!실검', value='네이버 실시간 검색순위를 1위부터 20위까지 보여줍니다.', inline=False)
+        embed.add_field(name='!실검', value='네이버 실시간 검색순위를 1위부터 10위까지 보여줍니다.', inline=False)
         embed.add_field(name='!운세 생일(월/일)', value='★ 별자리 운세를 알아봅니다 예)!운세 1/12.', inline=False)
         embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
