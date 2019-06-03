@@ -16,7 +16,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print("------------------")
-    await client.change_presence(activity=discord.Game(name="말하는 쿠키봇"))
+    await client.change_presence(activity=discord.Game(name="!명령어 "))
 
 
 
@@ -65,7 +65,7 @@ async def on_message(message):
             embed.add_field(name=str(i + 1) + '위', value='\n' + '[%s](<%s>)' % (realTimeSerach, realURL),
                             inline=False)  # [텍스트](<링크>) 형식으로 적으면 텍스트 하이퍼링크 만들어집니다
 
-        await message.channel.send( embed=embed,delete_after=20)
+        await message.channel.send( embed=embed,delete_after=40)
 
     if message.content.startswith("!명령어"):
         embed = discord.Embed(
@@ -85,7 +85,7 @@ async def on_message(message):
         embed.add_field(name='!운세 생일(월/일)', value='★ 별자리 운세를 알아봅니다 예)!운세 1/12.', inline=False)
         embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
-        await message.channel.send(embed=embed,delete_after=20)
+        await message.channel.send(embed=embed,delete_after=40)
 
     if message.content.startswith("!투표"):
 
