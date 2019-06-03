@@ -170,7 +170,7 @@ async def on_message(message):
         embed.add_field(name='내일의 운세', value=luck5[1].text, inline=False)
         embed.add_field(name='이주의 운세', value=luck5[2].text, inline=False)
         embed.add_field(name='이달의 운세', value=luck5[3].text, inline=False)
-        await message.channel.send(embed=embed, delete_after=120)
+        await message.channel.send(embed=embed, delete_after=300)
 
     if message.content.startswith("!롤"):
         learn = message.content[3:].split(" ")
@@ -246,13 +246,13 @@ async def on_message(message):
         if rank4.strip() == 'Unranked':
             embed.add_field(name='당신의 티어', value=rank4, inline=False)
             embed.add_field(name='-당신은 언랭-', value="언랭은 정보제공 따위 안합니다.", inline=False)
-            await message.channel.send(embed=embed,delete_after=40)
+            await message.channel.send(embed=embed,delete_after=300)
         else:
             embed.add_field(name='당신의 티어', value=rank4, inline=False)
             embed.add_field(name='당신의 LP(점수)', value=jumsu4, inline=False)
             embed.add_field(name='당신의 승,패 정보', value=winlose2txt + " " + winlose2_1txt, inline=False)
             embed.add_field(name='당신의 승률', value=winlose2_2txt, inline=False)
-            await message.channel.send(embed=embed,delete_after=40)
+            await message.channel.send(embed=embed,delete_after=300)
 
 
 
