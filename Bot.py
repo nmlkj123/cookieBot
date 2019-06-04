@@ -32,13 +32,13 @@ async def on_message(message):
             lolm=['강해지고싶나??? 그럼 롤을 키시게!! (￣ω￣)','롤각 가즈아~ (* >ω<) (＞Д＜)ゝ','★오늘의메타 : 탑소라카 GOGO -얼른키라구!'
                   ,'오늘은 승급하는날 입니다（＾∀＾）','이번판은 팀원들이 캐리 하겠네요! ＾ω＾ y','이번판은 당신의 손에 승패가 갈립니다.열시미 하세요! (￣`Д´￣)9']
             await message.channel.send(
-                embed=discord.Embed(description=random.choice(lolm), colour=discord.Colour.green()),delete_after=40)
+                embed=discord.Embed(description=random.choice(lolm), colour=discord.Colour.green()),delete_after=300)
             return
         else:
             lolm = ['응 오늘은아니야~ (ಥ﹏ಥ)', '오늘하면 9대1을 하게 될 것입니다 물론 당신이 1 (;Д;)(Ｔ▽Ｔ)', '우리팀 정글이 던지는날입니다...마음의 준비를하세요! ☜╮(´ิ∀´ิ☜╮)'
                 , '오늘은 10연패각 입니다ㄷㄷ (;´Д｀)','당장 메이플을 키세요 ԅ( ˘ω˘ԅ)','지금하면 15분 서렌각;; ((( ；ﾟДﾟ)))']
             await message.channel.send(
-                embed=discord.Embed(description=random.choice(lolm), colour=discord.Colour.red()),delete_after=40)
+                embed=discord.Embed(description=random.choice(lolm), colour=discord.Colour.red()),delete_after=300)
             return
 
     if message.content.startswith('!실검') :
@@ -65,7 +65,7 @@ async def on_message(message):
             embed.add_field(name=str(i + 1) + '위', value='\n' + '[%s](<%s>)' % (realTimeSerach, realURL),
                             inline=False)  # [텍스트](<링크>) 형식으로 적으면 텍스트 하이퍼링크 만들어집니다
 
-        await message.channel.send( embed=embed,delete_after=40)
+        await message.channel.send( embed=embed,delete_after=300)
 
     if message.content.startswith("!명령어"):
         embed = discord.Embed(
@@ -85,7 +85,7 @@ async def on_message(message):
         embed.add_field(name='!운세 생일(월/일)', value='★ 별자리 운세를 알아봅니다 예)!운세 01/12.', inline=False)
         embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
-        await message.channel.send(embed=embed,delete_after=40)
+        await message.channel.send(embed=embed,delete_after=60)
 
     if message.content.startswith("!투표"):
 
