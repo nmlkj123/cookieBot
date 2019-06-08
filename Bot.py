@@ -17,8 +17,7 @@ async def on_ready():
     print(client.user.id)
     print("------------------")
     await client.change_presence(activity=discord.Game(name="!명령어 "))
-    #game = discord.Game("!명령어")
-    #await client.change_presence(status=discord.Status.idle, activity=game)
+
 
 
 
