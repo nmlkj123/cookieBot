@@ -25,9 +25,16 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content.startswith('!냥냥'):
+        
         embed = discord.Embed(
             title='야옹~! ฅ•ω•ฅ !!!',
             description='랜덤고먐이',
+            colour=discord.Colour.green()
+        )
+        embed2 = discord.Embed(
+            colour=discord.Colour.green()
+        )
+        embed3 = discord.Embed(
             colour=discord.Colour.green()
         )
 
@@ -35,7 +42,11 @@ async def on_message(message):
         randomNum = random.randrange(1, 30977)
         urlF = urlBase+str(randomNum)
         embed.set_image(url = urlF)
+        embed2.set_image(url = 'https://loremflickr.com/320/240?random=2')
+        embed3.set_image(url = 'https://loremflickr.com/320/240?random=3')
         await message.channel.send(embed=embed,delete_after=300)    
+        await message.channel.send(embed=embed2,delete_after=300) 
+        await message.channel.send(embed=embed3,delete_after=300) 
     
     if message.content.startswith('!롤각'):
 
