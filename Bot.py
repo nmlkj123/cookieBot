@@ -57,7 +57,7 @@ async def on_message(message):
 
         print(Text.strip())
         embed = discord.Embed(
-            title="복권 숫자!",
+            title="가즈아!",
             description=Text.strip(),
             colour=discord.Color.red()
         )
