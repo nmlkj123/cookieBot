@@ -104,7 +104,7 @@ async def on_message(message):
         embed.add_field(name='!롤 아이디', value='롤op.gg 전적검색 결과를 보여줍니다 참고- 언랭은 정보따위 제공안합니다.', inline=True)
         embed.add_field(name='!롤각', value='오늘 롤의 운세를 정해줍니다 찡긋^.', inline=False)
         embed.add_field(name='!냥냥', value='고양이 사진을 무작위로 보여줍니다.ฅ•ω•ฅ', inline=False)
-        embed.add_field(name='!', value='강아지 사진을 무작위로 보여줍니다.(⁎˃ᆺ˂)', inline=False)
+        embed.add_field(name='!멍멍', value='강아지 사진을 무작위로 보여줍니다.(⁎˃ᆺ˂)', inline=False)
         embed.add_field(name='!play 유튜브 링크', value='뮤직앱에 노래를 추가합니다.', inline=False)
         embed.add_field(name='!np', value='현재 플레이중인 노래의 제목,정보를 봅니다. ', inline=False)
         embed.add_field(name='!queue', value='뮤직앱에 예약중인 플레이 리스트를 봅니다.', inline=False)
