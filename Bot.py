@@ -41,7 +41,7 @@ async def on_message(message):
         
     if message.content.startswith('!멍멍'):
         embed = discord.Embed(
-            title='왈왈~! (⁎˃ᆺ˂)  ʕº̫͡ºʔ !!!',
+            title='왈왈~! (⁎˃ᆺ˂)  ʢᵕᴗᵕʡ !!!',
             description='랜덤 강아지',
             colour=discord.Colour.green()
         )
