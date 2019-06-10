@@ -34,7 +34,7 @@ async def on_message(message):
         urlBase = 'https://loremflickr.com/320/240?lock='
         randomNum = random.randrange(1, 30977)
         urlF = urlBase+str(randomNum)
-        embed.image(url = urlF)
+        embed.set_image(url = urlF)
         await message.channel.send(embed=embed,delete_after=300)    
     
     if message.content.startswith('!롤각'):
