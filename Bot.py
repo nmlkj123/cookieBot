@@ -70,6 +70,7 @@ async def on_message(message):
             embed.set_image(url='http:'+icon2)
             await message.channel.send(embed=embed, delete_after=180)
             
+            
     if message.content.startswith("!날씨"):
         learn = message.content.split(" ")
         location = learn[1]
