@@ -1,5 +1,5 @@
 import discord
-
+from urllib.request import urlopen, Request
 import os
 import datetime
 import urllib.request
@@ -24,6 +24,155 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    
+    if message.content.startswith("!미드") or message.content.startswith("!원딜")or message.content.startswith("!탑")\
+            or message.content.startswith("!정글")or message.content.startswith("!서포터"):
+        learn = message.content.split(" ")
+        location=1
+        line=f(learn[0].replace(" ", ""))
+
+        if len(learn)==1:
+            location = location*5
+        else:
+            location = int(learn[1])*5
+        url = 'https://kr.op.gg/champion/statistics'
+        html = urllib.request.urlopen(url)
+        bsObj = bs4.BeautifulSoup(html, "html.parser")
+
+        top = bsObj.find('tbody', {'class': 'tabItem champion-trend-tier-'+line})
+        tr=top.find_all('tr')
+        if(len(tr)<location):
+            location=len(tr)
+        for i in range(location-5, location):
+
+            rank=tr[i].find('td',{'class':'champion-index-table__cell champion-index-table__cell--rank'})
+
+            name=tr[i].find('div',{'class':'champion-index-table__name'})
+            link=tr[i].find('td',{'class':'champion-index-table__cell champion-index-table__cell--champion'})
+            link2=link.find('a')
+            link3='https://www.op.gg'+link2.get('href')
+            wli=tr[i].find_all('td',{'class':'champion-index-table__cell champion-index-table__cell--value'})
+            win=wli[0]
+            pix=wli[1]
+            icon=wli[2].find('img')
+            icon2=icon.get('src')
+
+
+
+            embed = discord.Embed(
+                title=name.text,
+                description='승률 :' + win.text + ', 픽률 :' + pix.text,
+
+                colour=discord.Colour.green()
+            )
+            embed.add_field(name='정보보기', value='[%s](<%s>)' % ('이곳을 눌러 정보보기', link3), inline=False)
+            embed.set_thumbnail(url='http://opgg-static.akamaized.net/images/lol/champion/'+name.text.replace(" ", "")+'.png?image=w_140&v=1')
+            embed.set_image(url='http:'+icon2)
+            await message.channel.send(embed=embed, delete_after=180)
+            
+    if message.content.startswith("!날씨"):
+        learn = message.content.split(" ")
+        location = learn[1]
+        enc_location = urllib.parse.quote(location + '날씨')
+        hdr = {'User-Agent': 'Mozilla/5.0'}
+        url = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=' + enc_location
+
+        req = Request(url, headers=hdr)
+        html = urllib.request.urlopen(req)
+        bsObj = bs4.BeautifulSoup(html, "html.parser")
+
+        url2 = "https://weather.naver.com/life/wetrClsrmIcon.nhn"
+        html2 = urllib.request.urlopen(url2)
+
+        bsObj2 = bs4.BeautifulSoup(html2, "html.parser")
+
+        img=bsObj2.find('table', {'class': 'tbl_type1'})
+        imgs=img.find_all('img')
+
+
+        area1 = bsObj.find('div', {'class': 'weather_box'})
+
+        area = area1('div', {'class': 'select_box'})
+
+        toarea = area1.find('em')
+        areas= toarea.text
+
+        todayBase = bsObj.find('div', {'class': 'main_info'})
+
+        todayTemp1 = todayBase.find('span', {'class': 'todaytemp'})
+        todayTemp = todayTemp1.text.strip()  # 온도
+        print(todayTemp)
+
+        todayValueBase = todayBase.find('ul', {'class': 'info_list'})
+        todayValue2 = todayValueBase.find('p', {'class': 'cast_txt'})
+        todayValue = todayValue2.text.strip()  # 밝음,어제보다 ?도 높거나 낮음을 나타내줌
+        print(todayValue)
+
+        todayFeelingTemp1 = todayValueBase.find('span', {'class': 'sensible'})
+        todayFeelingTemp = todayFeelingTemp1.text.strip()  # 체감온도
+        print(todayFeelingTemp)
+
+        todayMiseaMongi1 = bsObj.find('div', {'class': 'sub_info'})
+        todayMiseaMongi2 = todayMiseaMongi1.find('div', {'class': 'detail_box'})
+        todayMiseaMongi3 = todayMiseaMongi2.find('dd')
+        todayMiseaMongi = todayMiseaMongi3.text  # 미세먼지
+        print(todayMiseaMongi)
+
+        tomorrowBase = bsObj.find('div', {'class': 'table_info weekly _weeklyWeather'})
+        tomorrowTemp1 = tomorrowBase.find('li', {'class': 'date_info'})
+        tomorrowTemp2 = tomorrowTemp1.find('dl')
+        tomorrowTemp3 = tomorrowTemp2.find('dd')
+        tomorrowTemp = tomorrowTemp3.text.strip()  # 오늘 오전,오후온도
+        print(tomorrowTemp)
+
+        tomorrowAreaBase = bsObj.find('div', {'class': 'tomorrow_area'})
+        tomorrowMoring1 = tomorrowAreaBase.find('div', {'class': 'main_info morning_box'})
+        tomorrowMoring2 = tomorrowMoring1.find('span', {'class': 'todaytemp'})
+        tomorrowMoring = tomorrowMoring2.text.strip()  # 내일 오전 온도
+        print(tomorrowMoring)
+
+        tomorrowValue1 = tomorrowMoring1.find('div', {'class': 'info_data'})
+        tomorrowValue = tomorrowValue1.text.strip()  # 내일 오전 날씨상태, 미세먼지 상태
+        print(tomorrowValue)
+
+        tomorrowAreaBase = bsObj.find('div', {'class': 'tomorrow_area'})
+        tomorrowAllFind = tomorrowAreaBase.find_all('div', {'class': 'main_info morning_box'})
+        tomorrowAfter1 = tomorrowAllFind[1]
+        tomorrowAfter2 = tomorrowAfter1.find('p', {'class': 'info_temperature'})
+        tomorrowAfter3 = tomorrowAfter2.find('span', {'class': 'todaytemp'})
+        tomorrowAfterTemp = tomorrowAfter3.text.strip()  # 내일 오후 온도
+        print(tomorrowAfterTemp)
+
+        tomorrowAfterValue1 = tomorrowAfter1.find('div', {'class': 'info_data'})
+        tomorrowAfterValue = tomorrowAfterValue1.text.strip()
+
+        print(tomorrowAfterValue)  # 내일 오후 날씨상태,미세먼지
+        icon=todayValue.split(',')
+        src=''
+        for i in range(0, len(imgs)):
+            s=imgs[i].get('alt')
+            if(s.replace(" ", "")==icon[0]):
+                src=imgs[i].get('src')
+
+
+        embed = discord.Embed(
+            title=' 날씨 정보',
+            description= areas,
+            colour=discord.Colour.gold()
+        )
+        embed.set_thumbnail(url=src)
+        embed.add_field(name='-현재날씨', value='```asciidoc\n= ' + todayTemp + '˚' + ' =\n```' +
+                                            '```yaml\n' + todayValue + '\n```' +
+                                            '```fix\n' + tomorrowTemp + ' , ' + todayFeelingTemp + ' , 미세먼지: ' + todayMiseaMongi + '\n```\n',
+                        inline=False)  # 현재날씨
+        embed.add_field(name='-내일오전', value='```asciidoc\n= ' + tomorrowMoring + '˚' + ' =\n```' +
+                                            '```yaml\n' + tomorrowValue + '\n```', inline=True)  # 내일오전
+        embed.add_field(name='-내일오후', value='```asciidoc\n= ' + tomorrowAfterTemp + '˚' + ' =\n```' +
+                                            '```yaml\n' + tomorrowAfterValue + '\n```', inline=True)  # 내일오후
+
+
+
+        await message.channel.send(embed=embed, delete_after=300)
         
     if message.content.startswith('!냥냥'):
         
@@ -102,6 +251,11 @@ async def on_message(message):
         )
         dtime = datetime.datetime.now()
         embed.add_field(name='!롤 아이디', value='롤op.gg 전적검색 결과를 보여줍니다 참고- 언랭은 정보따위 제공안합니다.', inline=True)
+        embed.add_field(name='!탑 숫자', value='탑 챔피언의 티어와 승률을 순서대로 보여줍니다 예)!탑 1.', inline=True)
+        embed.add_field(name='!미드 숫자', value='미드 챔피언의 티어와 승률을 5개씩 순서대로 보여줍니다 예)!미드 1.', inline=True)
+        embed.add_field(name='!정글 숫자', value='정글 챔피언의 티어와 승률을 5개씩 순서대로 보여줍니다 예)!정글 1.', inline=True)
+        embed.add_field(name='!원딜 숫자', value='원딜 챔피언의 티어와 승률을 5개씩 순서대로 보여줍니다 예)!원딜 1.', inline=True)
+        embed.add_field(name='!서포터 숫자', value='서포터 챔피언의 티어와 승률을 5개씩 순서대로 보여줍니다 예)!서포터 1.', inline=True)
         embed.add_field(name='!롤각', value='오늘 롤의 운세를 정해줍니다 찡긋^.', inline=False)
         embed.add_field(name='!냥냥', value='고양이 사진을 무작위로 보여줍니다.ฅ•ω•ฅ', inline=False)
         embed.add_field(name='!멍멍', value='강아지 사진을 무작위로 보여줍니다.(⁎˃ᆺ˂)', inline=False)
@@ -113,6 +267,7 @@ async def on_message(message):
         embed.add_field(name='!투표 제목/내용/내용...', value='투표함을 만듭니다. 이모지를 클릭하여 투표를 진행합니다.', inline=False)
         embed.add_field(name='!실검', value='네이버 실시간 검색순위를 1위부터 10위까지 보여줍니다.', inline=False)
         embed.add_field(name='!운세 생일(월/일)', value='★ 별자리 운세를 알아봅니다 예)!운세 01/12.', inline=False)
+        embed.add_field(name='!날씨 지역', value='현재 날씨와 내일의 날씨를 불러옵니다. 예)!날씨 서울.', inline=False)
         embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
         await message.channel.send(embed=embed,delete_after=60)
