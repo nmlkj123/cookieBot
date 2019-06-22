@@ -25,8 +25,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     
-    if message.content.startswith("!미드") or message.content.startswith("!원딜")or message.content.startswith("!탑")\
-            or message.content.startswith("!정글")or message.content.startswith("!서포터"):
+    if message.content.startswith("!미드") or message.content.startswith("!원딜")or message.content.startswith("!탑")or message.content.startswith("!정글")or message.content.startswith("!서포터"):
         learn = message.content.split(" ")
         location=1
         line=f(learn[0].replace(" ", ""))
