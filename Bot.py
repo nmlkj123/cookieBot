@@ -49,7 +49,7 @@ async def on_message(message):
         html = urllib.request.urlopen(req)
         bsObj = bs4.BeautifulSoup(html, "html.parser")
         listi = bsObj.find_all('div', {'class': 'ss_book_box'})
-        print(listi)
+        #print(listi)
         embed = discord.Embed(
             title='베스트셀러',
             description=location,
@@ -72,7 +72,7 @@ async def on_message(message):
             if len(au2)<3:
                 au = aui[1].text
                 au2 = au.split("|")
-            print(au2)
+            #print(au2)
             if i==0:
                 embed.set_thumbnail(url=image)
             embed.add_field(name=i+1, value='[%s](<%s>) ' % (name, link)+'\n'+au2[0]+'|'+au2[1]+'|'+au2[2], inline=False)
@@ -117,8 +117,8 @@ async def on_message(message):
             easyw.insert(i, wt)
             easy.insert(i, e)
 
-        print(easy)
-        print(easyw)
+        #print(easy)
+        #print(easyw)
         imagei=bsObj.find('div',{'class':'champion-stats-header-info__image'})
         image='https:'+imagei.find('img').get('src')
         name=bsObj.find('h1', {'class': 'champion-stats-header-info__name'}).text
