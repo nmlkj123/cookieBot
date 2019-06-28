@@ -22,9 +22,133 @@ async def on_ready():
 
 
 def f(x): return {'!원딜': 'ADC', '!정글': 'JUNGLE','!미드':'MID','!탑':'TOP','!서포터':'SUPPORT'}.get(x, '3')
+def b(x): return {'종합': '0', '소설': '1','에세이':'55889','자격증':'1383','경제경영':'170',
+                  '인문':'656','사회과학':'798','경제경영':'170','과학':'987','외국어':'1322',
+                  '건강/취미':'55890','라노벨':'50927','종교':'1237','가정/요리':'1230','역사':'74','자기계발':'336',
+                  '여행':'1196','컴퓨터':'351','만화':'2551'}.get(x, '3')
 @client.event
 async def on_message(message):
-    
+        if message.content.startswith("!책"):
+        learn = message.content.split(" ")
+        if(len(learn)<2):
+            location='3'
+        else:
+            location = learn[1]
+        a=b(location)
+        if(a=='3'):
+            await message.channel.send(
+                embed=discord.Embed(description="!책 (종합, 소설, 에세이, 자격증, 경제경영, 인문, 사회과학, 경제경영, 과학,\n "
+                                                "외국어, 건강/취미, 라노벨, 종교, 가정/요리, 역사, 자기계발, 여행, 컴퓨터, 만화", colour=discord.Colour.green()), delete_after=60)
+            return
+
+        enc_location = urllib.parse.quote(a)
+        hdr = {'User-Agent': 'Mozilla/5.0'}
+        url = 'https://www.aladin.co.kr/shop/common/wbest.aspx?BranchType=1&CID='+enc_location
+
+        req = Request(url, headers=hdr)
+        html = urllib.request.urlopen(req)
+        bsObj = bs4.BeautifulSoup(html, "html.parser")
+        listi = bsObj.find_all('div', {'class': 'ss_book_box'})
+        print(listi)
+        embed = discord.Embed(
+            title='베스트셀러',
+            description=location,
+
+            colour=discord.Colour.green()
+        )
+        for i in range(0,15):
+
+            cover = listi[i].find('img')
+            image=cover.get('src')
+            #이름,링크,등등
+            linki=listi[i].find('div', {'class': 'ss_book_list'})
+            linki2 = linki.find('a',{'class':'bo3'})
+            link=linki2.get('href')
+            name=linki2.find('b').text
+
+            aui=linki.find_all('li')
+            au=aui[2].text
+            au2=au.split("|")
+            if len(au2)<3:
+                au = aui[1].text
+                au2 = au.split("|")
+            print(au2)
+            if i==0:
+                embed.set_thumbnail(url=image)
+            embed.add_field(name=i+1, value='[%s](<%s>) ' % (name, link)+'\n'+au2[0]+'|'+au2[1]+'|'+au2[2], inline=False)
+
+        await message.channel.send(embed=embed, delete_after=180)
+
+
+
+    if message.content.startswith("!챔피언"):
+        learn = message.content.split(" ")
+        location = learn[1]
+        enc_location = urllib.parse.quote(location)
+        hdr = {'User-Agent': 'Mozilla/5.0',"Accept-Language" : "ko-KR"}
+        url = 'https://www.op.gg/champion/'+enc_location+'/statistics'
+
+        req = Request(url, headers=hdr)
+        html = urllib.request.urlopen(req)
+        bsObj = bs4.BeautifulSoup(html, "html.parser")
+        #카운터챔피언
+        counteri=bsObj.find('table',{'class':'champion-stats-header-matchup__table champion-stats-header-matchup__table--strong tabItem'})
+        counterc=counteri.find_all('tr')
+        counter=[]
+        counterw=[]
+        for i in range(0,10):
+            s=counterc[i].find('td',{'class':'champion-stats-header-matchup__table__champion'}).text
+            w = counterc[i].find('td', {'class': 'champion-stats-header-matchup__table__winrate'})
+            wt= w.find('b').text
+
+            s=s.lstrip().rstrip()
+            counterw.insert(i,wt)
+            counter.insert(i,s)
+        #쉬운챔피언
+        easyi = bsObj.find('table', {'class': 'champion-stats-header-matchup__table champion-stats-header-matchup__table--weak tabItem'})
+        easyc = easyi.find_all('tr')
+        easy = []
+        easyw = []
+        for i in range(0, len(easyc)):
+            e = easyc[i].find('td', {'class': 'champion-stats-header-matchup__table__champion'}).text
+            w = easyc[i].find('td', {'class': 'champion-stats-header-matchup__table__winrate'})
+            wt = w.find('b').text
+            e = e.lstrip().rstrip()
+            easyw.insert(i, wt)
+            easy.insert(i, e)
+
+        print(easy)
+        print(easyw)
+        imagei=bsObj.find('div',{'class':'champion-stats-header-info__image'})
+        image='https:'+imagei.find('img').get('src')
+        name=bsObj.find('h1', {'class': 'champion-stats-header-info__name'}).text
+        tieri=bsObj.find('div', {'class': 'champion-stats-header-info__tier'})
+        tier=tieri.find('b').text
+        skilli=bsObj.find('table', {'class': 'champion-overview__table champion-overview__table--summonerspell'})
+        skillc=skilli.find_all('tbody')
+        skillc2=skillc[1].find_all('li', {'class': 'champion-stats__list__item tip'})
+        skill=[]
+        for i in range(0,len(skillc2)):
+            skill+=skillc2[i].find('span').text
+
+        embed = discord.Embed(
+            title=name,
+            description=tier,
+
+            colour=discord.Colour.green()
+        )
+
+        embed.add_field(name='자세한정보', value='[%s](<%s>)' % ('이곳을 눌러 정보보기', url), inline=False)
+        embed.add_field(name='\n🔸\n추천 스킬 빌드', value=skill[0]+'>'+skill[1]+'>'+skill[2]+'\n\n 🔹', inline=False)
+        embed.add_field(name='카운터 챔피언', value=counter[0]+' 승률 : '+counterw[0]+
+                                              '\n' + counter[1] +' 승률 : '+counterw[1]+
+                                              '\n' + counter[2]+' 승률 : '+counterw[2], inline=True)
+        embed.add_field(name='상대하기 쉬운 챔피언', value=easy[0] +' 승률 : '+easyw[0]+
+                                                  '\n' + easy[1] +' 승률 : '+easyw[1]+
+                                                  '\n' + easy[2]+' 승률 : '+easyw[2], inline=True)
+
+        embed.set_thumbnail(url=image)
+        await message.channel.send(embed=embed, delete_after=180)
     if message.content.startswith("!미드") or message.content.startswith("!원딜")or message.content.startswith("!탑")\
             or message.content.startswith("!정글")or message.content.startswith("!서포터"):
         learn = message.content.split(" ")
@@ -252,6 +376,7 @@ async def on_message(message):
         )
         dtime = datetime.datetime.now()
         embed.add_field(name='!롤 아이디', value='롤op.gg 전적검색 결과를 보여줍니다 참고- 언랭은 정보따위 제공안합니다.', inline=True)
+        embed.add_field(name='!챔피언 챔피언이름', value='챔피언의 간단한 정보를 불러 옵니다 예)!챔피언 모데카이저 .', inline=True)
         embed.add_field(name='!탑 숫자', value='탑 챔피언의 티어와 승률을 순서대로 보여줍니다 예)!탑 1.', inline=True)
         embed.add_field(name='!미드 숫자', value='미드 챔피언의 티어와 승률을 5개씩 순서대로 보여줍니다 예)!미드 1.', inline=True)
         embed.add_field(name='!정글 숫자', value='정글 챔피언의 티어와 승률을 5개씩 순서대로 보여줍니다 예)!정글 1.', inline=True)
@@ -269,9 +394,11 @@ async def on_message(message):
         embed.add_field(name='!실검', value='네이버 실시간 검색순위를 1위부터 10위까지 보여줍니다.', inline=False)
         embed.add_field(name='!운세 생일(월/일)', value='★ 별자리 운세를 알아봅니다 예)!운세 01/12.', inline=False)
         embed.add_field(name='!날씨 지역', value='현재 날씨와 내일의 날씨를 불러옵니다. 예)!날씨 서울.', inline=False)
+        embed.add_field(name='!책 장르', value='주간 베트스셀러 TOP15 위를 불러옵니다. 장르(종합, 소설, 에세이, 자격증, 경제경영, 인문, 사회과학, 경제경영, 과학,\n "
+                                                "외국어, 건강/취미, 라노벨, 종교, 가정/요리, 역사, 자기계발, 여행, 컴퓨터, 만화)', inline=False)
         embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
-        await message.channel.send(embed=embed,delete_after=60)
+        await message.channel.send(embed=embed,delete_after=180)
 
     if message.content.startswith("!투표"):
 
