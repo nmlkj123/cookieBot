@@ -96,7 +96,7 @@ async def on_message(message):
         counterc=counteri.find_all('tr')
         counter=[]
         counterw=[]
-        for i in range(0,10):
+        for i in range(0,len(counterc)):
             s=counterc[i].find('td',{'class':'champion-stats-header-matchup__table__champion'}).text
             w = counterc[i].find('td', {'class': 'champion-stats-header-matchup__table__winrate'})
             wt= w.find('b').text
@@ -149,6 +149,7 @@ async def on_message(message):
 
         embed.set_thumbnail(url=image)
         await message.channel.send(embed=embed, delete_after=180)
+        
     if message.content.startswith("!미드") or message.content.startswith("!원딜")or message.content.startswith("!탑")\
             or message.content.startswith("!정글")or message.content.startswith("!서포터"):
         learn = message.content.split(" ")
