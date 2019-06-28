@@ -28,7 +28,7 @@ def b(x): return {'종합': '0', '소설': '1','에세이':'55889','자격증':'
                   '여행':'1196','컴퓨터':'351','만화':'2551'}.get(x, '3')
 @client.event
 async def on_message(message):
-        if message.content.startswith("!책"):
+    if message.content.startswith("!책"):
         learn = message.content.split(" ")
         if(len(learn)<2):
             location='3'
