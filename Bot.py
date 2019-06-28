@@ -394,8 +394,8 @@ async def on_message(message):
         embed.add_field(name='!실검', value='네이버 실시간 검색순위를 1위부터 10위까지 보여줍니다.', inline=False)
         embed.add_field(name='!운세 생일(월/일)', value='★ 별자리 운세를 알아봅니다 예)!운세 01/12.', inline=False)
         embed.add_field(name='!날씨 지역', value='현재 날씨와 내일의 날씨를 불러옵니다. 예)!날씨 서울.', inline=False)
-        embed.add_field(name='!책 장르', value='주간 베트스셀러 TOP15 위를 불러옵니다. 장르(종합, 소설, 에세이, 자격증, 경제경영, 인문, 사회과학, 경제경영, 과학,\n "
-                                                "외국어, 건강/취미, 라노벨, 종교, 가정/요리, 역사, 자기계발, 여행, 컴퓨터, 만화)', inline=False)
+        embed.add_field(name='!책 장르', value='주간 베트스셀러 TOP15 위를 불러 옵니다. \n장르(종합, 소설, 에세이, 자격증, 경제경영, 인문, 사회과학, 경제경영, 과학,'
+                                            '\n 외국어, 건강/취미, 라노벨, 종교, 가정/요리, 역사, 자기계발, 여행, 컴퓨터, 만화)', inline=False)
         embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
         await message.channel.send(embed=embed,delete_after=180)
