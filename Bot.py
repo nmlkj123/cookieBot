@@ -132,7 +132,7 @@ async def on_message(message):
             skill+=skillc2[i].find('span').text
 
         embed = discord.Embed(
-            title=":8851_league_of_legends: "+name,
+            title=name,
             description=tier,
 
             colour=discord.Colour.green()
@@ -550,7 +550,7 @@ async def on_message(message):
         channel = message.channel
         embed = discord.Embed(
             title=id4+'님의 롤 정보',
-            description=':8851_league_of_legends: 롤 정보입니다.',
+            description='롤 정보입니다.',
 
             colour=discord.Colour.red()
         )
