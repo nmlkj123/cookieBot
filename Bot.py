@@ -304,7 +304,7 @@ async def on_message(message):
 
 
 
-        await message.channel.send(embed=embed, delete_after=300)
+        await message.channel.send(embed=embed)
         
     if message.content.startswith('!냥냥'):
         
@@ -318,7 +318,7 @@ async def on_message(message):
         randomNum = random.randrange(1, 30977)
         urlF = urlBase+str(randomNum)
         embed.set_image(url = urlF)
-        await message.channel.send(embed=embed,delete_after=300)
+        await message.channel.send(embed=embed)
         
     if message.content.startswith('!멍멍'):
         embed = discord.Embed(
@@ -331,7 +331,7 @@ async def on_message(message):
         randomNum = random.randrange(1, 30977)
         urlF = urlBase+str(randomNum)
         embed.set_image(url = urlF)
-        await message.channel.send(embed=embed,delete_after=300)
+        await message.channel.send(embed=embed)
         
     if message.content.startswith('!롤각'):
 
@@ -572,7 +572,7 @@ async def on_message(message):
             embed.add_field(name='당신의 LP(점수)', value=jumsu4, inline=False)
             embed.add_field(name='당신의 승,패 정보', value=winlose2txt + " " + winlose2_1txt, inline=False)
             embed.add_field(name='당신의 승률', value=winlose2_2txt, inline=False)
-            await message.channel.send(embed=embed,delete_after=300)
+            await message.channel.send(embed=embed)
 
 
 
