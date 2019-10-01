@@ -203,8 +203,9 @@ async def on_message(message):
             
             
     if message.content.startswith("!날씨"):
-        learn = message.content.split(" ")
-        location = learn[1]
+        
+        location = message.content[4:]
+
         enc_location = urllib.parse.quote(location + '날씨')
         hdr = {'User-Agent': 'Mozilla/5.0'}
         url = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=' + enc_location
@@ -373,7 +374,7 @@ async def on_message(message):
             embed.add_field(name=str(i + 1) + '위', value='\n' + '[%s](<%s>)' % (realTimeSerach, realURL),
                             inline=False)  # [텍스트](<링크>) 형식으로 적으면 텍스트 하이퍼링크 만들어집니다
 
-        await message.channel.send( embed=embed,delete_after=300)
+        await message.channel.send( embed=embed)
 
     if message.content.startswith("!명령어"):
         embed = discord.Embed(
@@ -490,7 +491,7 @@ async def on_message(message):
         embed.add_field(name='내일의 운세', value=luck5[1].text, inline=False)
         embed.add_field(name='이주의 운세', value=luck5[2].text, inline=False)
         embed.add_field(name='이달의 운세', value=luck5[3].text, inline=False)
-        await message.channel.send(embed=embed, delete_after=300)
+        await message.channel.send(embed=embed, delete_after=1800)
 
     if message.content.startswith("!롤"):
         learn = message.content[3:].split(" ")
