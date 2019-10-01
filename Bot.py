@@ -154,7 +154,7 @@ async def on_message(message):
                                                   '\n' + easy[2]+' 승률 : '+easyw[2], inline=True)
 
         embed.set_thumbnail(url=image)
-        await message.channel.send(embed=embed, delete_after=180)
+        await message.channel.send(embed=embed, delete_after=300)
         
     if message.content.startswith("!미드") or message.content.startswith("!원딜")or message.content.startswith("!탑")\
             or message.content.startswith("!정글")or message.content.startswith("!서포터"):
@@ -199,7 +199,7 @@ async def on_message(message):
             embed.add_field(name='정보보기', value='[%s](<%s>)' % ('이곳을 눌러 정보보기', link3), inline=False)
             embed.set_thumbnail(url='http://opgg-static.akamaized.net/images/lol/champion/'+name.text.replace(" ", "")+'.png?image=w_140&v=1')
             embed.set_image(url='http:'+icon2)
-            await message.channel.send(embed=embed, delete_after=180)
+            await message.channel.send(embed=embed, delete_after=300)
             
             
     if message.content.startswith("!날씨"):
@@ -375,7 +375,7 @@ async def on_message(message):
             embed.add_field(name=str(i + 1) + '위', value='\n' + '[%s](<%s>)' % (realTimeSerach, realURL),
                             inline=False)  # [텍스트](<링크>) 형식으로 적으면 텍스트 하이퍼링크 만들어집니다
 
-        await message.channel.send( embed=embed)
+        await message.channel.send( embed=embed,delete_after=300)
 
     if message.content.startswith("!명령어"):
         embed = discord.Embed(
