@@ -290,14 +290,14 @@ async def on_message(message):
 
         embed = discord.Embed(
             title=' 날씨 정보',
-            description= '[%s](<%s>)' % (areas+'\n\n(자세히보기 클릭)\n', url),
+            description= 'areas+[%s](<%s>)' % ('\n\n(자세히보기 클릭)', url),
             colour=discord.Colour.gold()
         )
         embed.set_thumbnail(url=src)
         
         embed.add_field(name='-현재날씨', value='```asciidoc\n= ' + todayTemp + '˚' + ' =\n```' +
                                             '```yaml\n' + todayValue + '\n```' +
-                                            '```fix\n' + tomorrowTemp + ' , ' + todayFeelingTemp + ' , 미세먼지: ' + todayMiseaMongi + '\n```\n\n',
+                                            '```fix\n' + tomorrowTemp + ' , ' + todayFeelingTemp + ' , 미세먼지: ' + todayMiseaMongi + '\n```\n',
                         inline=False)  # 현재날씨
         embed.add_field(name='-내일오전', value='```asciidoc\n= ' + tomorrowMoring + '˚' + ' =\n```' +
                                             '```yaml\n' + tomorrowValue + '\n```', inline=True)  # 내일오전
