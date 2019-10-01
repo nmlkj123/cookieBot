@@ -83,7 +83,7 @@ async def on_message(message):
                 embed.set_thumbnail(url=image)
             embed.add_field(name=i+1, value='[%s](<%s>) ' % (name, link)+'\n'+au2[0]+'|'+au2[1]+'|'+au2[2], inline=False)
 
-        await message.channel.send(embed=embed, delete_after=180)
+        await message.channel.send(embed=embed, delete_after=1800)
 
 
 
@@ -290,10 +290,11 @@ async def on_message(message):
 
         embed = discord.Embed(
             title=' 날씨 정보',
-            description= areas,
+            description= '[%s](<%s>)' % (areas, url),
             colour=discord.Colour.gold()
         )
         embed.set_thumbnail(url=src)
+        
         embed.add_field(name='-현재날씨', value='```asciidoc\n= ' + todayTemp + '˚' + ' =\n```' +
                                             '```yaml\n' + todayValue + '\n```' +
                                             '```fix\n' + tomorrowTemp + ' , ' + todayFeelingTemp + ' , 미세먼지: ' + todayMiseaMongi + '\n```\n',
@@ -406,7 +407,7 @@ async def on_message(message):
                                             '\n 외국어, 건강/취미, 라노벨, 종교, 가정/요리, 역사, 자기계발, 여행, 컴퓨터, 만화)', inline=False)
         embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
-        await message.channel.send(embed=embed,delete_after=180)
+        await message.channel.send(embed=embed,delete_after=300)
 
     if message.content.startswith("!투표"):
 
