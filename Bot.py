@@ -290,7 +290,7 @@ async def on_message(message):
 
         embed = discord.Embed(
             title=' 날씨 정보',
-            description= 'areas+[%s](<%s>)' % ('\n\n(자세히보기 클릭)', url),
+            description= areas+'[%s](<%s>)' % ('\n\n(자세히보기 클릭)', url),
             colour=discord.Colour.gold()
         )
         embed.set_thumbnail(url=src)
