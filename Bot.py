@@ -29,53 +29,47 @@ def b(x): return {'종합': '0', '소설': '1','에세이':'55889','자격증':'
 @client.event
 async def on_message(message):
     if message.content.startswith("!급식"):
-        
+
         location = message.content[4:]
-		
-        enc_location = urllib.parse.quote(location +' 급식')
+
+        enc_location = urllib.parse.quote(location + ' 급식')
         hdr = {'User-Agent': 'Mozilla/5.0'}
         url = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=' + enc_location
 
         req = Request(url, headers=hdr)
         html = urllib.request.urlopen(req)
         bsObj = bs4.BeautifulSoup(html, "html.parser")
-		
+        title= bsObj.find('div',{'class':'sc cs_school _cs_school'})
+        main_title=title.find('strong').text
+        area = bsObj.find('div', {'data-time-target': 'true'})
 
-        area1 = bsObj.find('div', {'data-time-target': 'true'})
+        menu_info = area.find_all('li',{'class': 'menu_info'})
+        todays = menu_info[0].find('strong').text
+        tomorrows = menu_info[1].find('strong').text
+        todayr = menu_info[0].find_all('li')
+        tomorrowr = menu_info[1].find_all('li')
+        todayl = ''
+        tomorrowl = ''
+        for i in range(0, len(todayr)):
+            if (i == 0):
+                todayl += todayr[i].text
+            else:
+                todayl += '\n'+todayr[i].text
 
-        area = area1.find('div', {'class': 'select_box'})
-		menu_info=area.find_all('li')
-		todays=menu_info[0].find('strong').text
-		tomorrows=menu_info[1].find('strong').text
-		todayr=menu_info[0].find_all('li')
-		tomorrowr=menu_info[1].find_all('li')
-		todayl=''
-		tomorrowl=''
-		for i in range(0,len(todayr)):
-			if(i==0):
-				todayl+=todayr[i].text
-			else:
-				todayl+='\n'todayr[i].text
-
-		for i in range(0,len(tomorrowr)):
-			if(i==0):
-				tomorrowl+=tomorrowr[i].text
-			else:
-				tomorrowl+='\n'tomorrowr[i].text            
-
+        for i in range(0, len(tomorrowr)):
+            if (i == 0):
+                tomorrowl += tomorrowr[i].text
+            else:
+                tomorrowl += '\n'+tomorrowr[i].text
 
         embed = discord.Embed(
             title=' 급식정보',
-            description= areas+'[%s](<%s>)' % ('\n\n(자세히보기 클릭)', url),
-            colour=discord.Colour.gold()
+            description=main_title,
+            colour=discord.Colour.green()
         )
-        
-        
-        embed.add_field(name=todays, value=todayl,inline=False)  # 현재날씨
-        embed.add_field(name=tomorrows, value=tomorrowl,inline=False)  # 현재날씨
 
-
-
+        embed.add_field(name=todays, value=todayl, inline=False)  # 현재날씨
+        embed.add_field(name=tomorrows, value=tomorrowl, inline=False)  # 현재날씨
 
         await message.channel.send(embed=embed)
         
@@ -456,7 +450,9 @@ async def on_message(message):
         embed.add_field(name='!날씨 지역', value='현재 날씨와 내일의 날씨를 불러옵니다. 예)!날씨 서울.', inline=False)
         embed.add_field(name='!책 장르', value='주간 베트스셀러 TOP15 위를 불러 옵니다. \n장르(종합, 소설, 에세이, 자격증, 경제경영, 인문, 사회과학, 경제경영, 과학,'
                                             '\n 외국어, 건강/취미, 라노벨, 종교, 가정/요리, 역사, 자기계발, 여행, 컴퓨터, 만화)', inline=False)
-        embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
+        embed.add_field(name='!급식 학교명', value='급식을 확인합니다.. ', inline=False)
+	
+	embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
         await message.channel.send(embed=embed,delete_after=300)
 
