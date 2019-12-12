@@ -28,6 +28,56 @@ def b(x): return {'종합': '0', '소설': '1','에세이':'55889','자격증':'
                   '여행':'1196','컴퓨터':'351','만화':'2551'}.get(x, '3')
 @client.event
 async def on_message(message):
+    if message.content.startswith("!급식"):
+        
+        location = message.content[4:]
+		
+        enc_location = urllib.parse.quote(location +' 급식')
+        hdr = {'User-Agent': 'Mozilla/5.0'}
+        url = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=' + enc_location
+
+        req = Request(url, headers=hdr)
+        html = urllib.request.urlopen(req)
+        bsObj = bs4.BeautifulSoup(html, "html.parser")
+		
+
+        area1 = bsObj.find('div', {'data-time-target': 'true'})
+
+        area = area1('div', {'class': 'select_box'})
+		menu_info=area.find_all('li')
+		todays=menu_info[0].find('strong').text
+		tomorrows=menu_info[1].find('strong').text
+		todayr=menu_info[0].find_all('li')
+		tomorrowr=menu_info[1].find_all('li')
+		todayl=''
+		tomorrowl=''
+		for i in range(0,len(todayr)):
+			if(i==0):
+				todayl+=todayr[i].text
+			else:
+				todayl+='\n'todayr[i].text
+
+		for i in range(0,len(tomorrowr)):
+			if(i==0):
+				tomorrowl+=tomorrowr[i].text
+			else:
+				tomorrowl+='\n'tomorrowr[i].text            
+
+
+        embed = discord.Embed(
+            title=' 급식정보',
+            description= areas+'[%s](<%s>)' % ('\n\n(자세히보기 클릭)', url),
+            colour=discord.Colour.gold()
+        )
+        
+        
+        embed.add_field(name=todays, value=todayl,inline=False)  # 현재날씨
+        embed.add_field(name=tomorrows, value=tomorrowl,inline=False)  # 현재날씨
+
+
+
+
+        await message.channel.send(embed=embed)
     if message.content.startswith('!서정'):
         lolm=['분명 챌린저 였으나, 상대하는것은 마치 다이아와 같았으니 우리팀 피지컬에 혀를 내두르며 채팅을 치더라. \n\n저 우롱하는 손짓을 보라! 마치 캐리 한다는 듯이 욕을 던져대니 어이하여 죽지않으리오. 어허, 라인전에서 풀콤맞고 피가 너덜이 나니 그녀가 아이쿠 하며 길을 서두르더라.\n\n아아 억울하다. 내가 본것은 소녀이거늘, 어이하여 상대하는 것은 듬직한 남자같은가. 오늘도 그녀의 캐리로 눈을 적시니 아아 달이 밝구나. 언제서야 그녀가 음성채팅을 할까.\n\n오랜 친구 관리자 겨울은 그녀와 함께 게임을 끌며 풍월을 읊었건만 어인 일로 도플갱어가  있는가 하여 그녀에 물으니, 아아 그녀는 저 악마같은 웃음으로 디스코드에서 사라졌나이다. 채팅창을 보시옵소서 저 소녀의 탈을 쓴 마녀가 우리를 핍박하나이다.\n\n그녀 잡아 벌하고 싶으나 힘이 모자르구나. 하늘이 이를 어여삐 여겨 고소를 내리오니 서정아 서정아 어두운 뒷골목 에서 우리를 해하지 말아라 해하지 말아라. 두려울 것은 그것이 아니거늘 다른 곳에서 화면넘어 웃고있는 그녀를 조심 하여라.\n\n그녀는이미 이세계 사람이더라.\n[RIP] 2019.07.18 ']
         await message.channel.send(
