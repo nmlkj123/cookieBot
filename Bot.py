@@ -40,28 +40,10 @@ async def on_message(message):
         req = Request(url, headers=hdr)
         html = urllib.request.urlopen(req)
         bsObj = bs4.BeautifulSoup(html, "html.parser")
+
         title= bsObj.find('div',{'class':'sc cs_school _cs_school'})
         main_title=title.find('strong').text
         area = bsObj.find('div', {'data-time-target': 'true'})
-
-        menu_info = area.find_all('li',{'class': 'menu_info'})
-        todays = menu_info[0].find('strong').text
-        tomorrows = menu_info[1].find('strong').text
-        todayr = menu_info[0].find_all('li')
-        tomorrowr = menu_info[1].find_all('li')
-        todayl = ''
-        tomorrowl = ''
-        for i in range(0, len(todayr)):
-            if (i == 0):
-                todayl += todayr[i].text
-            else:
-                todayl += '\n'+todayr[i].text
-
-        for i in range(0, len(tomorrowr)):
-            if (i == 0):
-                tomorrowl += tomorrowr[i].text
-            else:
-                tomorrowl += '\n'+tomorrowr[i].text
 
         embed = discord.Embed(
             title=' 급식정보',
@@ -69,8 +51,33 @@ async def on_message(message):
             colour=discord.Colour.green()
         )
 
-        embed.add_field(name=todays, value=todayl, inline=False)  # 현재날씨
-        embed.add_field(name=tomorrows, value=tomorrowl, inline=False)  # 현재날씨
+        for y in range(0, 2):
+            if(y==1):
+                area = area.find_next_sibling()
+
+            menu_info = area.find_all('li',{'class': 'menu_info'})
+            todays = menu_info[0].find('strong').text
+            tomorrows = menu_info[1].find('strong').text
+            todayr = menu_info[0].find_all('li')
+            tomorrowr = menu_info[1].find_all('li')
+            todayl = ''
+            tomorrowl = ''
+            for i in range(0, len(todayr)):
+                if (i == 0):
+                    todayl += todayr[i].text
+                else:
+                    todayl += '\n'+todayr[i].text
+
+            for i in range(0, len(tomorrowr)):
+                if (i == 0):
+                    tomorrowl += tomorrowr[i].text
+                else:
+                    tomorrowl += '\n'+tomorrowr[i].text
+
+
+
+            embed.add_field(name=todays, value=todayl, inline=False)  # 현재날씨
+            embed.add_field(name=tomorrows, value=tomorrowl, inline=False)  # 현재날씨
 
         await message.channel.send(embed=embed)
 
