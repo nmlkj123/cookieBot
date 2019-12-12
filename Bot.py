@@ -437,7 +437,7 @@ async def on_message(message):
             colour=discord.Colour.blue()
         )
         dtime = datetime.datetime.now()
-        embed.add_field(name='!롤 아이디', value='롤op.gg 전적검색 결과를 보여줍니다 참고- 언랭은 정보따위 제공안합니다.', inline=True)
+        embed.add_field(name='!롤 아이디', value='롤op.gg 전적검색 결과를 보여줍니다 참고- 언랭은 정보따위 제공안합니다.', inline=False)
         embed.add_field(name='!챔피언 챔피언이름', value='챔피언의 간단한 정보를 불러 옵니다 예)!챔피언 모데카이저 .', inline=True)
         embed.add_field(name='!탑 숫자', value='탑 챔피언의 티어와 승률을 순서대로 보여줍니다 예)!탑 1.', inline=True)
         embed.add_field(name='!미드 숫자', value='미드 챔피언의 티어와 승률을 5개씩 순서대로 보여줍니다 예)!미드 1.', inline=True)
