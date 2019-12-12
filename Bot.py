@@ -44,24 +44,24 @@ async def on_message(message):
         area1 = bsObj.find('div', {'data-time-target': 'true'})
 
         area = area1('div', {'class': 'select_box'})
-		menu_info=area.find_all('li')
-		todays=menu_info[0].find('strong').text
-		tomorrows=menu_info[1].find('strong').text
-		todayr=menu_info[0].find_all('li')
-		tomorrowr=menu_info[1].find_all('li')
-		todayl=''
-		tomorrowl=''
-		for i in range(0,len(todayr)):
-			if(i==0):
-				todayl+=todayr[i].text
-			else:
-				todayl+='\n'todayr[i].text
+	menu_info=area.find_all('li')
+	todays=menu_info[0].find('strong').text
+	tomorrows=menu_info[1].find('strong').text
+	todayr=menu_info[0].find_all('li')
+	tomorrowr=menu_info[1].find_all('li')
+	todayl=''
+	tomorrowl=''
+	for i in range(0,len(todayr)):
+		if(i==0):
+			todayl+=todayr[i].text
+		else:
+			todayl+='\n'todayr[i].text
 
-		for i in range(0,len(tomorrowr)):
-			if(i==0):
-				tomorrowl+=tomorrowr[i].text
-			else:
-				tomorrowl+='\n'tomorrowr[i].text            
+	for i in range(0,len(tomorrowr)):
+		if(i==0):
+			tomorrowl+=tomorrowr[i].text
+		else:
+			tomorrowl+='\n'tomorrowr[i].text            
 
 
         embed = discord.Embed(
