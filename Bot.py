@@ -29,6 +29,48 @@ def b(x): return {'종합': '0', '소설': '1', '에세이': '55889', '자격증
 
 @client.event
 async def on_message(message):
+    if message.content.startswith("!메이플"):
+        location = message.content[5:]
+
+        enc_location = urllib.parse.quote(location)
+        hdr = {'User-Agent': 'Mozilla/5.0'}
+        url = 'https://maple.gg/u/' + enc_location
+
+        req = Request(url, headers=hdr)
+        html = urllib.request.urlopen(req)
+        bsObj = bs4.BeautifulSoup(html, "html.parser")
+        imaget = bsObj.find('div', {'class': 'col-6 col-md-8 col-lg-6'})
+        image=imaget.find('img').get('src')
+        title = bsObj.find('div', {'class': 'col-lg-8'})
+        worldt = title.find('img')
+        worldm=worldt.get('src')
+        worldn = title.find('img').get('alt')
+        name = title.find('b').text
+        infoa=title.find('ul', {'class': 'user-summary-list'}).text.replace('\n','|')
+        infoa=infoa.replace('도|','도:')
+        infob=title.find('div',{'class':'row row-normal user-additional'}).text.replace(' ','')
+        infob=infob.replace('\n','')
+        infob = infob.replace('\n', ' ')
+        infob = infob.replace('종합랭킹', '\n🔹종합랭킹: ')
+        infob = infob.replace('월드랭킹', '🔹월드랭킹: ')
+        infob = infob.replace('직업랭킹(월드)', '🔹직업랭킹(월드): ')
+        infob = infob.replace('직업랭킹(전체)', '🔹직업랭킹(전체): ')
+        infob = infob.replace('위', '위\n')
+        infob = infob.replace('길드', '🔸길드: ')
+
+        embed = discord.Embed(
+            title=name+'님의 정보',
+            description="월드: "+worldn,
+            colour=discord.Colour.green()
+        )
+
+        embed.set_image(url=image)
+        embed.add_field(name='정보', value=infoa+'\n'+infob, inline=False)  # 현재날씨
+
+        embed.set_thumbnail(url=worldm)
+        await message.channel.send(embed=embed)
+
+        return
     if message.content.startswith("!급식"):
 
         location = message.content[4:]
