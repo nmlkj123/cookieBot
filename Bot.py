@@ -513,7 +513,7 @@ async def on_message(message):
         await message.channel.send("✉투표 - " + vote[0])
         for i in range(1, len(vote)):
             
-            choose = await client.send_message(message.channel,vote[i])
+            choose = await message.channel.send(vote[i])
             await client.add_reaction(choose,'👍')
         return
     if message.content.startswith("!핑"):
