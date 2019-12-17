@@ -501,10 +501,11 @@ async def on_message(message):
         embed.add_field(name='!책 장르', value='주간 베트스셀러 TOP15 위를 불러 옵니다. \n장르(종합, 소설, 에세이, 자격증, 경제경영, 인문, 사회과학, 경제경영, 과학,'
                                             '\n 외국어, 건강/취미, 라노벨, 종교, 가정/요리, 역사, 자기계발, 여행, 컴퓨터, 만화)', inline=False)
         embed.add_field(name='!급식 학교명', value='급식을 확인.', inline=False)
+        embed.add_field(name='!메이플 캐릭터명', value='메이플스토리 캐릭터 정보를 확인.', inline=False)
         embed.set_footer(text=str(dtime.year) + "년 " + str(dtime.month) + "월 " + str(dtime.day) + "일 " + str(
             dtime.hour) + "시 " + str(dtime.minute) + "분")
         await message.channel.send(embed=embed, delete_after=300)
-
+        return
     if message.content.startswith("!투표"):
 
         vote = message.content[4:].split("/")
@@ -513,11 +514,11 @@ async def on_message(message):
         for i in range(1, len(vote)):
             choose = await  message.channel.send("```" + vote[i] + "```")
             await choose.add_reaction('👍')
-
+        return
     if message.content.startswith("!핑"):
         ping = '%.2f' % (1000 * (client.latency))
         await  message.channel.send(ping + "ms", delete_after=15)
-
+        return
     if message.content.startswith("!운세"):
         vote = message.content[4:].split("/")
         # print(vote)
@@ -589,7 +590,7 @@ async def on_message(message):
         embed.add_field(name='이주의 운세', value=luck5[2].text, inline=False)
         embed.add_field(name='이달의 운세', value=luck5[3].text, inline=False)
         await message.channel.send(embed=embed, delete_after=1800)
-
+        return
     if message.content.startswith("!롤"):
         learn = message.content[3:].split(" ")
         print(learn[0])
