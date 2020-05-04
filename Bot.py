@@ -446,31 +446,31 @@ async def on_message(message):
                 embed=discord.Embed(description=random.choice(lolm), colour=discord.Colour.red()), delete_after=300)
             return
 
-#     if message.content.startswith('!실검'):
+    if message.content.startswith('!실검'):
 
-#         url = "https://www.naver.com/"
-#         html = urllib.request.urlopen(url)
+        url = "https://www.naver.com/"
+        html = urllib.request.urlopen(url)
 
-#         bsObj = bs4.BeautifulSoup(html, "html.parser")
-#         realTimeSerach1 = bsObj.find('div', {'class': 'ah_roll_area PM_CL_realtimeKeyword_rolling'})
-#         realTimeSerach2 = realTimeSerach1.find('ul', {'class': 'ah_l'})
-#         realTimeSerach3 = realTimeSerach2.find_all('li')
+        bsObj = bs4.BeautifulSoup(html, "html.parser")
+        realTimeSerach1 = bsObj.find('div', {'class': 'ah_roll_area PM_CL_realtimeKeyword_rolling'})
+        realTimeSerach2 = realTimeSerach1.find('ul', {'class': 'ah_l'})
+        realTimeSerach3 = realTimeSerach2.find_all('li')
 
-#         embed = discord.Embed(
-#             title='네이버 실시간 검색순위',
-#             description='1위~10위',
-#             colour=discord.Colour.green()
-#         )
-#         for i in range(0, 10):
-#             realTimeSerach4 = realTimeSerach3[i]
-#             realTimeSerach5 = realTimeSerach4.find('span', {'class': 'ah_k'})
-#             realTimeSerach = realTimeSerach5.text.replace(' ', '')
-#             realURL = 'https://search.naver.com/search.naver?ie=utf8&query=' + realTimeSerach
-#             print(realTimeSerach)
-#             embed.add_field(name=str(i + 1) + '위', value='\n' + '[%s](<%s>)' % (realTimeSerach, realURL),
-#                             inline=False)  # [텍스트](<링크>) 형식으로 적으면 텍스트 하이퍼링크 만들어집니다
+        embed = discord.Embed(
+            title='네이버 실시간 검색순위',
+            description='1위~10위',
+            colour=discord.Colour.green()
+        )
+        for i in range(0, 10):
+            realTimeSerach4 = realTimeSerach3[i]
+            realTimeSerach5 = realTimeSerach4.find('span', {'class': 'ah_k'})
+            realTimeSerach = realTimeSerach5.text.replace(' ', '')
+            realURL = 'https://search.naver.com/search.naver?ie=utf8&query=' + realTimeSerach
+            print(realTimeSerach)
+            embed.add_field(name=str(i + 1) + '위', value='\n' + '[%s](<%s>)' % (realTimeSerach, realURL),
+                            inline=False)  # [텍스트](<링크>) 형식으로 적으면 텍스트 하이퍼링크 만들어집니다
 
-#         await message.channel.send(embed=embed, delete_after=300)
+        await message.channel.send(embed=embed, delete_after=300)
 
     if message.content.startswith("!명령어"):
         embed = discord.Embed(
