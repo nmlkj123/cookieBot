@@ -39,7 +39,7 @@ async def on_message(message):
         req = Request(url, headers=hdr)
         html = urllib.request.urlopen(req)
         bsObj = bs4.BeautifulSoup(html, "html.parser")
-        imaget = bsObj.find('div', {'class': 'col-lg-4'})
+        imaget = bsObj.find('div', {'class': 'col-lg-4 pt-1 pt-sm-0 pb-1 pb-sm-0 text-center mt-2 mt-lg-0'})
         image = imaget.find('img').get('src')
         title = bsObj.find('div', {'class': 'col-lg-8'})
         worldt = title.find('img')
