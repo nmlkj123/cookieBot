@@ -39,7 +39,7 @@ async def on_message(message):
         req = Request(url, headers=hdr)
         html = urllib.request.urlopen(req)
         bsObj = bs4.BeautifulSoup(html, "html.parser")
-        imaget = bsObj.find('div', {'class': 'row row-small character-avatar-row'})
+        imaget = bsObj.find('div', {'class': 'col-lg-4'})
         image = imaget.find('img').get('src')
         title = bsObj.find('div', {'class': 'col-lg-8'})
         worldt = title.find('img')
@@ -63,11 +63,10 @@ async def on_message(message):
             description="월드: "+worldn,
             colour=discord.Colour.green()
         )
-
-        embed.set_image(url=image)
         embed.add_field(name='정보', value=infoa+'\n'+infob, inline=False)  # 현재날씨
 
         embed.set_thumbnail(url=worldm)
+        embed.set_image(url=image)
         await message.channel.send(embed=embed)
 
         return
