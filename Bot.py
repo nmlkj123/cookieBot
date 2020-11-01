@@ -65,7 +65,7 @@ async def on_message(message):
         )
         embed.add_field(name='정보', value=infoa+'\n'+infob, inline=False)  # 현재날씨
 
-        embed.set_thumbnail(url=worldm)
+        embed.set_thumbnail(url=image)
         embed.set_image(url=image)
         await message.channel.send(embed=embed)
 
