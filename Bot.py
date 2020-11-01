@@ -33,14 +33,14 @@ async def on_message(message):
         location = message.content[5:]
 
         enc_location = urllib.parse.quote(location)
-        hdr = {'User-Agent': 'Mozilla/5.0'}
+        hdr = {'User-Agent': 'Mozilla/5.0', "Accept-Language": "ko-KR"}
         url = 'https://maple.gg/u/' + enc_location
 
         req = Request(url, headers=hdr)
         html = urllib.request.urlopen(req)
         bsObj = bs4.BeautifulSoup(html, "html.parser")
-        imaget = bsObj.find('div', {'class': 'col-lg-4 pt-1 pt-sm-0 pb-1 pb-sm-0 text-center mt-2 mt-lg-0'})
-        image = imaget.find('img').get('src')
+        imaget = bsObj.find('div', {'class': 'col-6 col-md-8 col-lg-6'})
+        image=imaget.find('img').get('src')
         title = bsObj.find('div', {'class': 'col-lg-8'})
         worldt = title.find('img')
         worldm=worldt.get('src')
@@ -57,16 +57,16 @@ async def on_message(message):
         infob = infob.replace('직업랭킹(전체)', '🔹직업랭킹(전체): ')
         infob = infob.replace('위', '위\n')
         infob = infob.replace('길드', '🔸길드: ')
-
+        image = image.replace('https','http')
         embed = discord.Embed(
             title=name+'님의 정보',
             description="월드: "+worldn,
             colour=discord.Colour.green()
         )
         embed.add_field(name='정보', value=infoa+'\n'+infob, inline=False)  # 현재날씨
-
-        embed.set_thumbnail(url=image)
-        embed.set_image(url=image)
+        embed.set_thumbnail(url=worldm)
+       
+        embed.set_image(url=image.strip())
         await message.channel.send(embed=embed)
 
         return
@@ -306,8 +306,8 @@ async def on_message(message):
 
         enc_location = urllib.parse.quote(location + '날씨')
         hdr = {'User-Agent': 'Mozilla/5.0'}
+        
         url = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=' + enc_location
-
         req = Request(url, headers=hdr)
         html = urllib.request.urlopen(req)
         bsObj = bs4.BeautifulSoup(html, "html.parser")
@@ -673,9 +673,8 @@ async def on_message(message):
             embed.add_field(name='당신의 승률', value=winlose2_2txt, inline=False)
             await message.channel.send(embed=embed)
 
-
-
-
+            
+            
 access_token = os.environ["BOT_TOKEN"]
 
 client.run(access_token)
